@@ -1,0 +1,69 @@
+[{
+  "ID": 1,
+  "SellRent": 1,
+  "Name": "Oak House",
+  "Type": "House",
+  "Price": 120000,
+  "Image": "house2"
+},
+{
+  "ID": 2,
+  "SellRent": 2,
+  "Name": "Birch House",
+  "Type": "Apartment",
+  "Price": 80000,
+  "Image": "house1"
+},
+{
+  "ID": 3,
+  "SellRent": 1,
+  "Name": "Maple House",
+  "Type": "Condo",
+  "Price": 150000
+},
+{
+  "ID": 4,
+  "SellRent": 2,
+  "Name": "Willow House",
+  "Type": "House",
+  "Price": 200000,
+  "Image": "house1"
+},
+{
+  "ID": 5,
+  "SellRent": 1,
+  "Name": "Small House",
+  "Type": "House",
+  "Price": 100000
+},
+{
+  "ID": 6,
+  "SellRent": 1,
+  "Name": "Big House",
+  "Type": "Apartment",
+  "Price": 100000,
+  "Image": "house2"
+},
+{
+  "ID": 7,
+  "SellRent": 1,
+  "Name": "Tiny House",
+  "Type": "Condo",
+  "Price": 110000
+},
+{
+  "ID": 8,
+  "SellRent": 2,
+  "Name": "Short House",
+  "Type": "Condo",
+  "Price": 150000,
+  "Image": "house1"
+},
+{
+  "ID": 9,
+  "SellRent": 1,
+  "Name": "Tall House",
+  "Type": "Apartment",
+  "Price": 90000,
+  "Image": "house2"
+}]
