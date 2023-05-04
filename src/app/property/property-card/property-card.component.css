@@ -2,17 +2,21 @@ h1 {
   font-weight: normal;
 }
 
-.propImg {
-  width: 300px;
-  height: 250px;
+.card {
+  min-height: 400px;
 }
 
-.img-wrapper {
+.propImg {
+  height: 250px;
+  overflow: hidden;
+}
+
+.card-img-wrapper {
   overflow: hidden;
   position: relative;
 }
 
-.img-wrapper:hover .icons{
+.card-img-wrapper:hover .icons{
   bottom: 0;
   opacity: 0.7;
 }
@@ -21,6 +25,7 @@ h1 {
   transform: scale(1.1,1.1);
   transition-duration: 500ms;
   transition-timing-function: ease-out;
+  height: 250px;
   opacity: 0.5;
 }
 
@@ -28,6 +33,7 @@ h1 {
   transform: scale(1);
   transition-duration: 500ms;
   transition-timing-function: ease-out;
+  height: 250px;
   opacity: 5;
 }
 
