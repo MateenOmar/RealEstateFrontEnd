@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule} from '@angular/common/http'
-import { Routes, RouterModule } from '@angular/router'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown'
-import { TabsModule } from 'ngx-bootstrap/tabs'
+import { HttpClientModule } from '@angular/common/http';
+import { Routes, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
@@ -23,14 +23,14 @@ import { AlertifyService } from './services/alertify.service';
 import { AuthService } from './services/auth.service';
 
 const appRoutes: Routes = [
-  {path: '', component: PropertyListComponent},
-  {path: 'add-property', component: AddPropertyComponent},
-  {path: 'rent-property', component: PropertyListComponent},
-  {path: 'property-details/:id', component: PropertyDetailsComponent},
-  {path: 'user/login', component: UserLoginComponent},
-  {path: 'user/register', component: UserRegisterComponent},
-  {path: '**', component: PropertyListComponent}
-]
+  { path: '', component: PropertyListComponent },
+  { path: 'add-property', component: AddPropertyComponent },
+  { path: 'rent-property', component: PropertyListComponent },
+  { path: 'property-details/:id', component: PropertyDetailsComponent },
+  { path: 'user/login', component: UserLoginComponent },
+  { path: 'user/register', component: UserRegisterComponent },
+  { path: '**', component: PropertyListComponent },
+];
 
 @NgModule({
   declarations: [
@@ -41,8 +41,8 @@ const appRoutes: Routes = [
     AddPropertyComponent,
     PropertyDetailsComponent,
     UserLoginComponent,
-    UserRegisterComponent
-   ],
+    UserRegisterComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -53,14 +53,9 @@ const appRoutes: Routes = [
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ButtonsModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
   ],
-  providers: [
-    HousingService,
-    UserServiceService,
-    AlertifyService,
-    AuthService
-  ],
-  bootstrap: [AppComponent]
+  providers: [HousingService, UserServiceService, AlertifyService, AuthService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

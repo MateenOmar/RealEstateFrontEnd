@@ -6,6 +6,16 @@ h1 {
   min-height: 400px;
 }
 
+.card-body h1 {
+  font-family: fantasy;
+  color: #0069d9;
+}
+
+.font-highlight {
+  font-style: italic;
+  color: red;
+}
+
 .propImg {
   height: 250px;
   overflow: hidden;
@@ -16,13 +26,13 @@ h1 {
   position: relative;
 }
 
-.card-img-wrapper:hover .icons{
+.card-img-wrapper:hover .icons {
   bottom: 0;
   opacity: 0.7;
 }
 
 .card:hover img {
-  transform: scale(1.1,1.1);
+  transform: scale(1.1, 1.1);
   transition-duration: 500ms;
   transition-timing-function: ease-out;
   height: 250px;
