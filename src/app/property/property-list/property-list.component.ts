@@ -11,6 +11,10 @@ import { IPropertyBase } from 'src/app/model/IPropertyBase';
 export class PropertyListComponent implements OnInit {
   SellRent = 1;
   properties: Array<IPropertyBase> = [];
+  City = '';
+  SearchCity = '';
+  SortbyParam = '';
+  SortDirection = 'asc';
 
   constructor(
     private route: ActivatedRoute,
@@ -24,12 +28,27 @@ export class PropertyListComponent implements OnInit {
     this.housingService.getAllProperties(this.SellRent).subscribe(
       (data) => {
         this.properties = data;
-
-        console.log(data);
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  onCityFilter() {
+    this.SearchCity = this.City;
+  }
+
+  onCityFilterClear() {
+    this.SearchCity = '';
+    this.City = '';
+  }
+
+  onSortDirection() {
+    if (this.SortDirection === 'desc') {
+      this.SortDirection = 'asc';
+    } else {
+      this.SortDirection = 'desc';
+    }
   }
 }
