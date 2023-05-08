@@ -51,6 +51,9 @@ export class AddPropertyComponent implements OnInit {
 
   ngOnInit() {
     this.createAddPropertyForm();
+    this.housingService.getAllCities().subscribe((data) => {
+      console.log(data);
+    });
   }
 
   createAddPropertyForm() {
