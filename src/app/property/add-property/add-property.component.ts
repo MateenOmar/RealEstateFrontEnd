@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
@@ -20,7 +21,6 @@ import { HousingService } from 'src/app/services/housing.service';
   styleUrls: ['./add-property.component.css'],
 })
 export class AddPropertyComponent implements OnInit {
-  //@ViewChild('Form') addPropertyForm!: NgForm;
   @ViewChild('formTabs') formTabs!: TabsetComponent;
 
   addPropertyForm!: FormGroup;
@@ -48,14 +48,19 @@ export class AddPropertyComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private housingService: HousingService,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit() {
+    if (!localStorage.getItem('username')) {
+      this.alertify.error('Please login to add property');
+      this.router.navigate(['/user/login']);
+    }
+
     this.createAddPropertyForm();
     this.housingService.getAllCities().subscribe((data) => {
       this.cityList = data;
-      console.log(data);
     });
 
     this.housingService.getPropertyTypes().subscribe((data) => {
@@ -81,8 +86,8 @@ export class AddPropertyComponent implements OnInit {
         Price: [null, Validators.required],
         BuiltArea: [null, Validators.required],
         CarpetArea: [null],
-        Security: [null],
-        Maintenance: [null],
+        Security: [0],
+        Maintenance: [0],
       }),
       AddressInfo: this.fb.group({
         FloorNo: [null],
@@ -92,7 +97,7 @@ export class AddPropertyComponent implements OnInit {
       }),
       OtherInfo: this.fb.group({
         RTM: [null, Validators.required],
-        PosessionOn: [null],
+        PosessionOn: [null, Validators.required],
         AOP: [null],
         Gated: [null],
         MainEntrance: [null],
@@ -185,10 +190,6 @@ export class AddPropertyComponent implements OnInit {
     return this.OtherInfo.controls['PosessionOn'] as FormControl;
   }
 
-  get AOP() {
-    return this.OtherInfo.controls['AOP'] as FormControl;
-  }
-
   get Gated() {
     return this.OtherInfo.controls['Gated'] as FormControl;
   }
@@ -207,17 +208,18 @@ export class AddPropertyComponent implements OnInit {
 
   onSubmit() {
     this.nextClicked = true;
-    console.log(this.addPropertyForm);
     if (this.allTabsValid()) {
       this.mapProperty();
-      this.housingService.addProperty(this.property);
-      this.alertify.success('Form Submitted');
+      this.housingService.addProperty(this.property).subscribe(() => {
+        this.alertify.success('Form Submitted');
+        console.log(this.addPropertyForm);
 
-      if (this.SellRent.value === '2') {
-        this.router.navigate(['/rent-property']);
-      } else {
-        this.router.navigate(['/']);
-      }
+        if (this.SellRent.value === '2') {
+          this.router.navigate(['/rent-property']);
+        } else {
+          this.router.navigate(['/']);
+        }
+      });
     } else {
       this.alertify.error('Provide all required data');
     }
@@ -227,10 +229,10 @@ export class AddPropertyComponent implements OnInit {
     this.property.id = this.housingService.newPropID();
     this.property.sellRent = +this.SellRent.value;
     this.property.bhk = this.BHK.value;
-    this.property.propertyType = this.PType.value;
+    this.property.propertyTypeID = this.PType.value;
     this.property.name = this.Name.value;
-    this.property.city = this.City.value;
-    this.property.furnishingType = this.FType.value;
+    this.property.cityID = this.City.value;
+    this.property.furnishingTypeID = this.FType.value;
     this.property.price = this.Price.value;
     this.property.security = this.Security.value;
     this.property.maintenance = this.Maintenance.value;
@@ -241,10 +243,12 @@ export class AddPropertyComponent implements OnInit {
     this.property.address = this.Address.value;
     this.property.address2 = this.LandMark.value;
     this.property.readToMove = this.RTM.value;
-    this.property.age = this.AOP.value;
     this.property.gated = this.Gated.value;
     this.property.mainEntrance = this.MainEntrance.value;
-    this.property.estPossessionOn = this.PosessionOn.value;
+    this.property.estPossessionOn = this.datePipe.transform(
+      this.PosessionOn.value,
+      'MM/dd/yyyy'
+    )!;
     this.property.description = this.Description.value;
   }
 
@@ -273,7 +277,6 @@ export class AddPropertyComponent implements OnInit {
 
   selectTab(tabID: number, isCurrentTabValid: boolean) {
     this.nextClicked = true;
-    console.log(this.addPropertyForm);
     if (isCurrentTabValid) {
       this.formTabs.tabs[tabID].active = true;
     }

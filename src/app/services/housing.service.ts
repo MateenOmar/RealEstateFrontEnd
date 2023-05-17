@@ -39,12 +39,16 @@ export class HousingService {
   }
 
   addProperty(property: Property) {
-    let newProp = [property];
-
-    if (localStorage.getItem('newProp')) {
-      newProp = [property, ...JSON.parse(localStorage.getItem('newProp')!)];
-    }
-    localStorage.setItem('newProp', JSON.stringify(newProp));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+    return this.http.post(
+      this.baseURL + '/property/add',
+      property,
+      httpOptions
+    );
   }
 
   newPropID() {
@@ -57,7 +61,7 @@ export class HousingService {
     }
   }
 
-  getPropertyAge(dateofEstablishment: Date): string {
+  getPropertyAge(dateofEstablishment: string): string {
     const today = new Date();
     const estDate = new Date(dateofEstablishment);
     let age = today.getFullYear() - estDate.getFullYear();
