@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserForLogin } from 'src/app/model/user';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -20,13 +21,20 @@ export class UserLoginComponent implements OnInit {
 
   onLogin(loginForm: NgForm) {
     console.log(loginForm.value);
-    const token = this.auth.authUser(loginForm.value);
-    if (token) {
-      localStorage.setItem('token', token.userName);
+    this.auth.authUser(loginForm.value).subscribe((response: any) => {
+      console.log(response);
+      const user = response;
+      localStorage.setItem('token', user.token);
+      localStorage.setItem('username', user.username);
       this.alertify.success('Login Successful');
       this.router.navigate(['/']);
-    } else {
-      this.alertify.error('Name or Password is Incorrect');
-    }
+    });
+    // if (token) {
+    //   localStorage.setItem('token', token.userName);
+    //   this.alertify.success('Login Successful');
+    //   this.router.navigate(['/']);
+    // } else {
+    //   this.alertify.error('Name or Password is Incorrect');
+    // }
   }
 }

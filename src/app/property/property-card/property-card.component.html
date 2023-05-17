@@ -1,12 +1,12 @@
 <div class="card">
   <div class="card-img-wrapper text-center">
     <img
-      *ngIf="property.Image"
+      *ngIf="property.image"
       class="propImg"
-      src="assets/images/{{ property.Image }}.png"
+      src="assets/images/{{ property.image }}.png"
     />
     <img
-      *ngIf="!property.Image"
+      *ngIf="!property.image"
       class="propImg"
       src="assets/images/defaultHouse.png"
     />
@@ -14,7 +14,7 @@
       <li class="list-inline-item icon">
         <button
           class="btn btn-primary"
-          routerLink="/property-details/{{ property.ID }}"
+          routerLink="/property-details/{{ property.id }}"
         >
           V
         </button>
@@ -25,22 +25,25 @@
     </ul>
   </div>
   <div class="card-body p-2">
-    <h1 class="mb-0">{{ property.BHK }} BHK {{ property.PType }}</h1>
-    in {{ property.Name }}
-    <span *ngIf="property.Name">,</span>
-    {{ property.City }}
+    <h1 class="mb-0">{{ property.bhk }} BHK {{ property.propertyType }}</h1>
+    in {{ property.name }}
+    <span *ngIf="property.name">,</span>
+    {{ property.city }}
 
     <h6 class="mt-2">
-      {{ property.FType }}
-      <span *ngIf="property.FType !== 'Unfurnished'">Furnished</span> | Ready to
-      Move
+      {{ property.furnishingType }}
+      <span *ngIf="property.furnishingType !== 'Unfurnished'">Furnished</span> |
+      <span *ngIf="property.readToMove"> | Ready To Move</span>
+      <span *ngIf="!property.readToMove">
+        | Possession: {{ property.estPossessionOn | date }}</span
+      >
     </h6>
 
     <hr class="my-0 mb-2" />
 
     <h6 class="mb-0">
-      Price: <span class="font-highlight">{{ property.Price }} USD.</span> |
-      Area: <span class="font-highlight">{{ property.BuiltArea }} Sq Ft</span>
+      Price: <span class="font-highlight">{{ property.price }} USD.</span> |
+      Area: <span class="font-highlight">{{ property.builtArea }} Sq Ft </span>
     </h6>
   </div>
 </div>

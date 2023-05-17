@@ -7,9 +7,10 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { User } from 'src/app/model/user';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { Router } from '@angular/router';
+import { UserForRegister } from 'src/app/model/user';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-register',
@@ -18,12 +19,13 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 })
 export class UserRegisterComponent implements OnInit {
   registrationForm!: FormGroup;
-  user!: User;
+  user!: UserForRegister;
   userSubmitted: boolean = false;
   constructor(
     private fb: FormBuilder,
-    private userService: UserServiceService,
-    private alertify: AlertifyService
+    private authService: AuthService,
+    private alertify: AlertifyService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class UserRegisterComponent implements OnInit {
   createRegistrationForm() {
     this.registrationForm = this.fb.group(
       {
-        userName: [null, Validators.required],
+        username: [null, Validators.required],
         email: [null, [Validators.required, Validators.email]],
         password: [null, [Validators.required, Validators.minLength(8)]],
         confirmPassword: [null, Validators.required],
@@ -49,8 +51,8 @@ export class UserRegisterComponent implements OnInit {
       : { notmatched: true };
   }
 
-  get userName() {
-    return this.registrationForm.get('userName') as FormControl;
+  get username() {
+    return this.registrationForm.get('username') as FormControl;
   }
 
   get password() {
@@ -72,12 +74,12 @@ export class UserRegisterComponent implements OnInit {
   onSubmit() {
     this.userSubmitted = true;
     if (this.registrationForm.valid) {
-      this.userService.addUser(this.userData());
-      this.registrationForm.reset();
-      this.userSubmitted = false;
-      this.alertify.success('Submitted, you are registered');
-    } else {
-      this.alertify.error('Please provide valid required fields');
+      this.authService.registerUser(this.userData()).subscribe(() => {
+        this.registrationForm.reset();
+        this.userSubmitted = false;
+        this.alertify.success('Submitted, you are registered');
+        this.router.navigate(['/user/login']);
+      });
     }
   }
 
@@ -86,9 +88,9 @@ export class UserRegisterComponent implements OnInit {
     this.userSubmitted = false;
   }
 
-  userData(): User {
+  userData(): UserForRegister {
     return (this.user = {
-      userName: this.userName.value,
+      username: this.username.value,
       email: this.email.value,
       password: this.password.value,
       mobile: this.mobile.value,
